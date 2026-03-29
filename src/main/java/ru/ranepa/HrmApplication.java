@@ -45,7 +45,12 @@ public class HrmApplication {
                     showStatistics();
                     break;
                 case "6":
+                    sortByName();
+                    break;
+                case "7":
                     running = false;
+                    System.out.println("Saving data to file...");
+                    employeeService.saveToFile("employees.csv");
                     System.out.println("Exiting program...");
                     break;
                 default:
@@ -62,7 +67,8 @@ public class HrmApplication {
         System.out.println("3. Delete employee");
         System.out.println("4. Find employee by ID");
         System.out.println("5. Show statistics");
-        System.out.println("6. Exit");
+        System.out.println("6. Sort by name");
+        System.out.println("7. Exit and save to file");
         System.out.print("Choose an option: ");
     }
 
@@ -141,5 +147,17 @@ public class HrmApplication {
                         emp -> System.out.println("Highest paid: " + emp),
                         () -> System.out.println("No employees to analyze")
                 );
+    }
+
+    private static void sortByName() {
+        List<Employee> sorted = employeeService.sortByName();
+        if (sorted.isEmpty()) {
+            System.out.println("No employees found");
+            return;
+        }
+        System.out.println("Employees sorted by name");
+        for (Employee employee : sorted) {
+            System.out.println(employee);
+        }
     }
 }

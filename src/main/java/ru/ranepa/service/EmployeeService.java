@@ -3,9 +3,12 @@ package ru.ranepa.service;
 import ru.ranepa.model.Employee;
 import ru.ranepa.repository.EmployeeRepository;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,5 +80,33 @@ public class EmployeeService {
 
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
+    }
+
+    //Сортировка
+    public List<Employee> sortByName() {
+        List<Employee> employees = employeeRepository.findAll();
+        employees.sort(Comparator.comparing(Employee::getName));
+        return employees;
+    }
+
+    public void saveToFile(String filename) {
+        List<Employee> employees = employeeRepository.findAll();
+
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write("ID,Name,Position,Salary,Hire Date\n");
+
+            for (Employee employee : employees) {
+                writer.write(
+                        employee.getId() + "," +
+                                employee.getName() + "," +
+                                employee.getPosition() + "," +
+                                employee.getSalary() + "," +
+                                employee.getHireDate() + "\n"
+                );
+            }
+            System.out.println("Данные сохранены в файл: " + filename);
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении файла: " + e.getMessage());
+        }
     }
 }
