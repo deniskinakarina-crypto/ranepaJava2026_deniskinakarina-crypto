@@ -10,4 +10,6 @@ public interface EmployeeRepository {
     Optional<Employee> findById(Long id);
     List<Employee> findAll();
     String delete(Long id);
+
+    void loadFromFile(String filename);
 }

@@ -18,11 +18,14 @@ public class Employee {
         if (position == null || position.trim().isEmpty()) {
             throw new IllegalArgumentException("Position cannot be empty");
         }
-        if (salary == null || salary.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Salary must be positive");
+        if (salary == null || salary.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Salary must be positive and greater than zero");
         }
         if (hireDate == null) {
             throw new IllegalArgumentException("Hire date cannot be null");
+        }
+        if (hireDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Hire date cannot be in the future");
         }
         this.name = name;
         this.position = position;

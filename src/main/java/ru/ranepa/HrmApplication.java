@@ -18,10 +18,13 @@ public class HrmApplication {
     static {
         EmployeeRepositoryImpl repository = new EmployeeRepositoryImpl();
         employeeService = new EmployeeService(repository);
+
+        // Загрузка данных из файла при запуске программы
+        employeeService.loadData("employees.csv");
     }
 
     public static void main(String[] args) {
-        System.out.println("=== HRM System Menu ===");
+        System.out.println("=== Employee Menu ===");
 
         boolean running = true;
         while (running) {

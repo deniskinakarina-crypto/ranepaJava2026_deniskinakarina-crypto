@@ -109,4 +109,7 @@ public class EmployeeService {
             System.out.println("Ошибка при сохранении файла: " + e.getMessage());
         }
     }
+    public void loadData(String filename) {
+        employeeRepository.loadFromFile(filename);
+    }
 }
