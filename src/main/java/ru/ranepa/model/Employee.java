@@ -1,15 +1,45 @@
 package ru.ranepa.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "employees")
 public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final String name;
-    private final String position;
-    private final BigDecimal salary;
-    private final LocalDate hireDate;
+
+    @NotBlank(message = "Name cannot be empty")
+    @Column(nullable = false)
+    private String name;
+
+    @NotBlank(message = "Position cannot be empty")
+    @Column(nullable = false)
+    private String position;
+
+    @NotNull(message = "Salary cannot be null")
+    @Positive(message = "Salary must be positive")
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal salary;
+
+    @NotNull(message = "Hire date cannot be null")
+    @Column(name = "hire_date", nullable = false)
+    private LocalDate hireDate;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    protected Employee() {
+    }
 
     public Employee(String name, String position, BigDecimal salary, LocalDate hireDate) {
         if (name == null || name.trim().isEmpty()) {
@@ -33,16 +63,13 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public Employee(String name, String position, double salary, LocalDate hireDate) {
-        this(name, position, BigDecimal.valueOf(salary), hireDate);
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -61,6 +88,18 @@ public class Employee {
         return hireDate;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -69,6 +108,7 @@ public class Employee {
                 ", position='" + position + '\'' +
                 ", salary=" + salary +
                 ", hireDate=" + hireDate +
+                ", createdAt=" + createdAt +
                 '}';
     }
 
