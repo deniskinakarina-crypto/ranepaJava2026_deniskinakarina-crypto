@@ -7,9 +7,6 @@ public record EmployeeStatsDto(
         BigDecimal averageSalary,
         EmployeeResponseDto highestPaidEmployee
 ) {
-    /**
-     * Пустая статистика (когда нет сотрудников)
-     */
     public static EmployeeStatsDto empty() {
         return new EmployeeStatsDto(0, BigDecimal.ZERO, null);
     }
