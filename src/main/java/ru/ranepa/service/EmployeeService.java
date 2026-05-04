@@ -1,4 +1,4 @@
-package ru.ranepa.hrm.service;
+package ru.ranepa.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.ranepa.dto.EmployeeRequestDto;
 import ru.ranepa.dto.EmployeeResponseDto;
 import ru.ranepa.dto.EmployeeStatsDto;
-import ru.ranepa.hrm.service.EmployeeService;
+import ru.ranepa.service.EmployeeService;
 
 import java.net.URI;
 import java.util.List;
@@ -35,7 +35,7 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<EmployeeResponseDto> createEmployee(
-            @RequestBody @Valid EmployeeRequestDto request) {
+            @Valid @RequestBody EmployeeRequestDto request) {
         EmployeeResponseDto created = employeeService.createEmployee(request);
         URI location = URI.create("/api/employees/" + created.id());
         return ResponseEntity.created(location).body(created);

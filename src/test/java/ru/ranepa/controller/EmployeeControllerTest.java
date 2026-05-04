@@ -10,7 +10,7 @@ import ru.ranepa.dto.EmployeeRequestDto;
 import ru.ranepa.dto.EmployeeResponseDto;
 import ru.ranepa.dto.EmployeeStatsDto;
 import ru.ranepa.exception.EmployeeNotFoundException;
-import ru.ranepa.hrm.service.EmployeeService;
+import ru.ranepa.service.EmployeeService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
